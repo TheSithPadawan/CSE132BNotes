@@ -292,13 +292,29 @@ CREATE OR REPLACE FUNCTION check_enrollment()
 
 **Part III: Row Storage vs. Column Storage**
 
+How things work in column storage 
 
-
-
-
-
-
-
+- sorted compression: [CA, CA , CA, NY, NY] is compressed into [CA * 3, NY * 2]
+- late tuple materialization: bitwise AND between 2 bit vectors 
+- block iteration 
+- invisible join: create a bit vector for each dimension, then apply AND to find the indices of positions that satisfy the requirement 
 
 ***
 
+**Part IV Datalog**
+
+pretty much the same as prolog in a db context 
+
+database:
+
+* Frequents (drinker, bar)
+* Likes (drinker, beer)
+* Sells (bar, beer, price)
+
+Write a query to find drinkers who frequent a bar that serves a beer they like 
+
+```prolog
+happy(d) <- frequents(d, bar) and sells (bar, beer, p) and likes (d, beer)
+```
+
+recursive rules and evaluation (I don't think it's important for the final)
